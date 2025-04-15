@@ -1,3 +1,6 @@
+// Problem: Count Good Triplets In an Array (LC 2179)
+// Link: https://leetcode.com/problems/count-good-triplets-in-an-array/
+
 class Solution {
 public:
     using ll = long long;
@@ -17,8 +20,8 @@ public:
     }
 
     int rangeSumQuery(ll st_idx,ll start,ll end,ll qs,ll qe){
-        if(qs>end or qe<start)  return 0;//Case-1: No overlap
-        if(start>=qs and end<=qe)   return seg_tree[st_idx];//Case-2: Total Overlap
+        if(qs>end || qe<start)  return 0;//Case-1: No overlap
+        if(start>=qs && end<=qe)   return seg_tree[st_idx];//Case-2: Total Overlap
 
         //Case-3: Partial Overlap
         ll mid = start + (end-start)/2;
