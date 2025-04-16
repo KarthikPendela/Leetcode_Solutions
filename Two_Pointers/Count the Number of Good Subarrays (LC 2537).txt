@@ -1,0 +1,30 @@
+// Problem: Count Good Triplets In an Array (LC 2179)
+// Link: https://leetcode.com/problems/count-the-number-of-good-subarrays/description/
+
+class Solution {
+public:
+    using ll = long long;
+    ll possible_pairs(ll n){
+        return (n*(n-1))/2;
+    }
+    long long countGood(vector<int>& nums, int k) {
+        unordered_map<ll,ll> cnt;
+        ll j=0;
+        ll pairs=0, n=nums.size(),ans=0;
+        for(ll i=0;i<n;i++){
+            while(pairs<k && j<n){
+                pairs-=possible_pairs(cnt[nums[j]]);
+                cnt[nums[j]]+=1;
+                pairs+=possible_pairs(cnt[nums[j]]);
+                j+=1;
+            }
+            if(pairs>=k){
+                ans+=n-j+1;
+            }
+            pairs-=possible_pairs(cnt[nums[i]]);
+            cnt[nums[i]]-=1;
+            pairs+=possible_pairs(cnt[nums[i]]);
+        }
+        return ans;
+    }
+};
