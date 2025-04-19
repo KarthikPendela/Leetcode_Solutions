@@ -1,0 +1,53 @@
+// Problem: Count the Number of Fair Pairs (LC 2563)
+// Link: https://leetcode.com/problems/count-the-number-of-fair-pairs/description/
+
+class Solution {
+public:
+    int func_lower(vector<int>&arr, int k){
+        int low=0, high=arr.size()-1, ans=arr.size();
+        while(low<=high){
+            int mid=(low+high)/2;
+            if(arr[mid]>=k){
+                ans=mid;
+                high=mid-1;
+            } else{
+                low=mid+1;
+            }
+        }
+
+        return ans;
+    }
+
+    int func_higher(vector<int>&arr, int k){
+        int low=0, high=arr.size()-1, ans=arr.size();
+        while(low<=high){
+            int mid=(low+high)/2;
+            if(arr[mid]>k){
+                ans=mid;
+                high=mid-1;
+            } else{
+                low=mid+1;
+            }
+        }
+
+        return ans;
+    }
+
+    long long countFairPairs(vector<int>& nums, int lower, int upper) {
+        sort(nums.begin(),nums.end());
+        long long ans=0, n= nums.size(), cnt=0;
+        while(cnt<n){
+            int k=nums[0];
+            nums.erase(nums.begin());
+            int comp_low=lower-k, comp_high=upper-k;
+            int low_bound = func_lower(nums,comp_low);
+            int high_bound = func_higher(nums,comp_high);
+            if(low_bound!=high_bound){
+                ans+=high_bound-low_bound;
+            }
+            cnt+=1;
+        }
+
+        return ans;
+    }
+};
