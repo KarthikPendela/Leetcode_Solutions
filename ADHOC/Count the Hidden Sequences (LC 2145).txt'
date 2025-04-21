@@ -1,0 +1,20 @@
+// Problem: Count the Hidden Sequences (LC 2145)
+// Link: https://leetcode.com/problems/count-the-hidden-sequences/description/
+
+class Solution {
+public:
+    int numberOfArrays(vector<int>& differences, int lower, int upper) {
+        vector<long long> cmp;
+        long long mi=0, ma=0;
+        for(int i=0;i<differences.size();i++){
+            if(i==0) cmp.push_back(differences[i]);
+            else cmp.push_back(differences[i]+cmp[i-1]);
+            mi=min(mi,cmp[i]);
+            ma=max(ma,cmp[i]);
+        }
+        long long lo=lower-mi, up=upper-ma;
+        long long ans = 0;
+        if((up-lo+1)>ans) ans= up-lo+1;
+        return ans;
+    }
+};
