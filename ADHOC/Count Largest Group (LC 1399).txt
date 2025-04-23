@@ -1,0 +1,25 @@
+// Problem: Count Largest Group (LC 1399)
+// Link: https://leetcode.com/problems/count-largest-group/description/
+
+class Solution {
+public:
+    int countLargestGroup(int n) {
+        map<int,int> mp;
+        int ans=0,ma=0;
+        for(int i=1;i<=n;i++){
+            int j=i,sod=0;
+            while(j){
+                sod+=j%10;
+                j/=10;
+            }
+            mp[sod]+=1;
+            if(mp[sod]>ma){
+                ans=1;
+                ma=mp[sod];
+            } else if(mp[sod]==ma){
+                ans+=1;
+            }
+        }
+        return ans;
+    }
+};
