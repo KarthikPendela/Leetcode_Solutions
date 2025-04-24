@@ -1,0 +1,26 @@
+// Problem: Count Complete Subarrays in an Array (LC 2799)
+// Link: https://leetcode.com/problems/count-complete-subarrays-in-an-array/description/
+
+class Solution {
+public:
+    int countCompleteSubarrays(vector<int>& nums) {
+        unordered_set<int> st;
+        for(int i=0;i<nums.size();i++){
+            st.insert(nums[i]);
+        }
+        int num_unique = st.size(),j=0,i=0,n=nums.size(),ans=0;
+        map<int,int> mp;
+        for(i=0;i<n;i++){
+            if(i>0){
+                mp[nums[i-1]]-=1;
+                if(mp[nums[i-1]]==0) mp.erase(nums[i-1]);
+            }
+            while(j<n && mp.size()<num_unique){
+                mp[nums[j]]+=1;
+                j+=1;
+            }
+            if(mp.size() == num_unique) ans+=n-j+1;
+        }
+        return ans;
+    }
+};
