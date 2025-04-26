@@ -1,0 +1,18 @@
+// Problem: Count Subarrays with Fixed Bounds (LC 2444)
+// Link: https://leetcode.com/problems/count-subarrays-with-fixed-bounds/description/
+
+class Solution {
+public:
+    using ll = long long;
+    long long countSubarrays(vector<int>& nums, int minK, int maxK) {
+        ll mink=-1, maxk=-1, invalid_idx=-1,n=nums.size(),ans=0;
+        // At every i try to calculate number of possible subarrays
+        for(int i=0;i<n;i++){
+            if(nums[i]<minK || nums[i]>maxK) invalid_idx=i;
+            if (nums[i]==minK) mink=i;
+            if (nums[i]==maxK) maxk=i;
+            ans+=max(0ll, min(mink,maxk)-invalid_idx);
+        }
+        return ans;
+    }
+};
