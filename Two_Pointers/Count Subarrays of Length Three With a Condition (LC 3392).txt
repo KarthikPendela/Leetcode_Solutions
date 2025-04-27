@@ -1,0 +1,18 @@
+// Problem: Count Subarrays of Length Three With a Condition (LC 3392)
+// Link: https://leetcode.com/problems/count-subarrays-of-length-three-with-a-condition/description/
+
+class Solution {
+public:
+    int countSubarrays(vector<int>& nums) {
+        int n=nums.size(),ans=0,i=0,j=2;
+        while(j<n){
+            int num_to_check = nums[j]+nums[i];
+            if(nums[i+1]%2==0){
+                if(num_to_check == nums[i+1]/2) ans+=1;
+            }
+            j+=1;
+            i+=1;
+        }
+        return ans;
+    }
+};
