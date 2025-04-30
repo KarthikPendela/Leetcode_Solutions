@@ -1,0 +1,18 @@
+// Problem: Find Numbers with Even Number of Digits (LC 1295)
+// Link: https://leetcode.com/problems/find-numbers-with-even-number-of-digits/description/
+
+class Solution {
+public:
+    int findNumbers(vector<int>& nums) {
+        int ans=0,n=nums.size();
+        for(int i=0;i<n;i++){
+            int j=nums[i],num_of_digits=0;
+            while(j){
+                num_of_digits+=1;
+                j/=10;
+            }
+            if(num_of_digits%2==0) ans+=1;
+        }
+        return ans;
+    }
+};
