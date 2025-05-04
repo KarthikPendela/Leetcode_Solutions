@@ -1,0 +1,20 @@
+// Problem: Number of Equivalent Domino Pairs (LC 1128)
+// Link: https://leetcode.com/problems/number-of-equivalent-domino-pairs/description/
+
+class Solution {
+public:
+    int numEquivDominoPairs(vector<vector<int>>& dominoes) {
+        map<pair<int,int>,int> pair_cnt;
+        int n=dominoes.size(),ans=0;
+        for(int i=0;i<n;i++){
+            int a = min(dominoes[i][0],dominoes[i][1]);
+            int b = max(dominoes[i][0],dominoes[i][1]);
+            pair_cnt[{a,b}]+=1;
+        }
+        for(auto idx:pair_cnt){
+            int cnt=idx.second;
+            ans += max(0,cnt*(cnt-1)/2);
+        }
+        return ans;
+    }
+};
