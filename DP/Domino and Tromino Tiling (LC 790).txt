@@ -1,0 +1,19 @@
+// Problem: Domino and Tromino Tiling (LC 790)
+// Link: https://leetcode.com/problems/domino-and-tromino-tiling/description/
+
+class Solution {
+public:
+    int MOD = 1e9+7; 
+    int numTilings(int n) {
+        if(n<=2) return n;
+        vector<int> ans(n+1,0);
+        ans[0]=1;
+        ans[1]=1;
+        ans[2]=2;
+        for(int i=3;i<=n;i++){
+            ans[i]=(2*ans[i-1]%MOD+ans[i-3]%MOD)%MOD;
+        }
+        return ans[n];
+
+    }
+};
