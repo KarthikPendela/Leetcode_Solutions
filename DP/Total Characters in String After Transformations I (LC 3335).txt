@@ -1,0 +1,28 @@
+// Problem: Total Characters in String After Transformations I (LC 3335)
+// Link: https://leetcode.com/problems/total-characters-in-string-after-transformations-i/description/
+
+class Solution {
+public:
+    using ll=long long;
+    int lengthAfterTransformations(string s, int t) {
+        vector<ll>cnt(26,0);
+        for(auto i:s){
+            cnt[i-'a']+=1;
+        }
+        int MOD=1e9+7;
+        for(int j=0;j<t;j++){
+            int cnt_z=cnt[25];
+            for(int i=25;i>=1;i--){
+                cnt[i]=cnt[i-1];
+            }
+            cnt[0]=cnt_z;
+            cnt[1]=(cnt[1]%MOD + cnt_z%MOD)%MOD;
+        }
+
+        int ans=0;
+        for(int i=0;i<26;i++){
+            ans = (ans%MOD + cnt[i]%MOD)%MOD;
+        }
+        return ans;
+    }
+};
