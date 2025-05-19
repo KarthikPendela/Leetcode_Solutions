@@ -1,0 +1,19 @@
+// Problem: Type of Triangle (LC 3024)
+// Link: https://leetcode.com/problems/type-of-triangle/description/
+
+class Solution {
+public:
+    string triangleType(vector<int>& nums) {
+        unordered_set<int> st;
+        for(int i=0;i<nums.size();i++){
+            st.insert(nums[i]);
+        }
+        int a=nums[0], b=nums[1], c=nums[2];
+        if(a<b+c && b<a+c && c<a+b){
+            if(st.size()==1) return "equilateral";
+            else if(st.size()==2) return "isosceles";
+            else return "scalene";
+        }
+        return "none";
+    }
+};
