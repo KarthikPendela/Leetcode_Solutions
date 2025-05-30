@@ -1,0 +1,50 @@
+// Problem: Longest Unequal Adjacent Groups Subsequence II (LC 2901)
+// Link: https://leetcode.com/problems/longest-unequal-adjacent-groups-subsequence-ii/description/
+
+class Solution {
+public:
+    bool check_hamming(string word1, string word2){
+        int cnt=0;
+        if(word1.size()!=word2.size()) return false;
+        for(int i=0;i<word1.size();i++){
+            if(word1[i]!=word2[i]) cnt+=1;
+            if(cnt>1) return false;
+        }
+        if(cnt!=1) return false;
+        return true;
+    }
+
+    vector<string> getWordsInLongestSubsequence(vector<string>& words, vector<int>& groups) {
+        vector<string> ans;
+        map<int,int> par;
+        int n=words.size();
+        vector<int> arr(n,0); 
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                if(groups[j]!=groups[i]){
+                    if(check_hamming(words[i],words[j])){
+                        if(arr[i]+1>arr[j]){
+                            arr[j]=arr[i]+1;
+                            par[j]=i;
+                        }
+                    }
+                }
+            }
+        }
+        int ind=-1,ma=INT_MIN;
+        for(int i=0;i<n;i++){
+            cout<<arr[i]<<" ";
+            if(arr[i]>ma){
+                ma=arr[i];
+                ind=i;
+            }
+        }
+        while(par.find(ind)!=par.end()){
+            ans.push_back(words[ind]);
+            ind=par[ind];
+        }
+        ans.push_back(words[ind]);
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
