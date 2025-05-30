@@ -1,0 +1,32 @@
+// Problem: Find Closest Node to Given Two Nodes (LC 2359)
+// Link: https://leetcode.com/problems/find-closest-node-to-given-two-nodes/description/
+
+class Solution {
+public:
+    void dfs(int src, vector<int>&vis, int dist, map<int,vector<int>> &adj){
+        if(vis[src]!=1e9) return;
+        vis[src]=dist;
+        for(auto nbr:adj[src]){
+            if(vis[nbr]==1e9) dfs(nbr,vis,dist+1,adj);
+        }
+        return;
+    }
+    int closestMeetingNode(vector<int>& edges, int node1, int node2) {
+        int n=edges.size();
+        vector<int> vis1(n,1e9),vis2(n,1e9);
+        map<int,vector<int>> adj;
+        for(int i=0;i<n;i++){
+            if(edges[i]!=-1) adj[i].push_back(edges[i]);
+        }
+        dfs(node1,vis1,0,adj);
+        dfs(node2,vis2,0,adj);
+        int ans=-1, cmp=1e9;
+        for(int i=0;i<n;i++){
+            if(max(vis1[i],vis2[i])<cmp){
+                cmp=max(vis1[i],vis2[i]);
+                ans=i;
+            }
+        }
+        return ans;
+    }
+};
