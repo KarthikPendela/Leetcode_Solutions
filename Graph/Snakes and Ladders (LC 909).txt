@@ -1,0 +1,56 @@
+// Problem: Snakes and Ladders (LC 909)
+// Link: https://leetcode.com/problems/snakes-and-ladders/description/
+
+class Solution {
+public:
+    int snakesAndLadders(vector<vector<int>>& board) {
+        int n=board.size(),cnt=0,num=1,row=0;
+        vector<int> vis(n*n+1,-1);
+        map<int,vector<int>> adj;
+        map<int, pair<int,int>> nums;
+        for(int i=n-1;i>=0;i--){
+            row=row%2;
+            if(row==0){
+                for(int j=0;j<n;j++){
+                    nums[num]={i,j};
+                    num+=1;
+                }
+            } else{
+                for(int j=n-1;j>=0;j--){
+                    nums[num]={i,j};
+                    num+=1;
+                }
+            }
+            row+=1;
+        }
+        for(int i=1;i<=n*n;i++){
+            for(int j=1;j<7;j++){
+                int nbr=i+j;
+                if(nbr<=n*n){
+                    pair<int,int> nxt = nums[nbr];
+                    int x=nxt.first, y=nxt.second;
+                    if(board[x][y]!=-1) adj[i].push_back(board[x][y]);
+                    else adj[i].push_back(nbr);
+                }
+            }
+        }
+        queue<int> q;
+        q.push(1);
+        vis[1]=1;
+        while(!q.empty()){
+            int m=q.size();
+            cnt+=1;
+            for(int i=0;i<m;i++){
+                int node=q.front();
+                q.pop();
+                for(auto nbr:adj[node]){
+                    if(vis[nbr]==-1){
+                        q.push(nbr);
+                        vis[nbr]=cnt;
+                    }
+                }
+            }
+        }
+        return vis[n*n];
+    }
+};
