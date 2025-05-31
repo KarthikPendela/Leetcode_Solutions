@@ -1,0 +1,37 @@
+// Problem: Painting a Grid With Three Different Colors (LC 1931)
+// Link: https://leetcode.com/problems/painting-a-grid-with-three-different-colors/description/
+
+class Solution {
+
+int MOD = 1e9+7;
+    int dp[1002][1023];
+    int countWays(int &m, int &n, int r,int c, int curr_state,int prev_state){
+        if(c==n) return 1;
+        if(r==m) return countWays(m,n,0,c+1,0,curr_state);
+        if(r==0 && dp[c][prev_state]!=-1) return dp[c][prev_state];
+
+        int up_color=0;
+        if(r>0) up_color = curr_state & 3;
+
+        int left_color = (prev_state >> ((m-r-1)*2)) & 3;
+
+        int no_of_ways=0;
+        for(int color=1;color<=3;color++){
+            if(color!=up_color && color!=left_color){
+                no_of_ways = (no_of_ways + countWays(m,n,r+1,c,(curr_state<<2)+color,prev_state))%MOD;
+            }
+        }
+
+        if(r==0){
+            dp[c][prev_state]=no_of_ways;
+        }
+        return no_of_ways;
+    }
+
+public:
+    
+    int colorTheGrid(int m, int n) {
+        memset(dp,-1,sizeof(dp));
+        return countWays(m,n,0,0,0,0);
+    }
+};
