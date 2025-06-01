@@ -1,0 +1,27 @@
+// Problem: Distribute Candies Among Children II (LC 2929)
+// Link: https://leetcode.com/problems/distribute-candies-among-children-ii/description/
+
+class Solution {
+public:
+    using ll = long long;
+    long long distributeCandies(int n, int limit) {
+        ll ans=0;
+        for(int i=0;i<=limit;i++){
+            int rem_sum = n-i;
+            ll st=0, en=min(rem_sum,limit),cnt=INT_MAX;
+            ll high=en;
+            while(st<=en){
+                ll mid = (st+en)/2;
+                ll ma = max(mid,rem_sum-mid);
+                if(ma>limit) st=mid+1;
+                else{
+                    cnt = high-mid+1;
+                    en=mid-1;
+                }
+            }
+            if(cnt==INT_MAX) continue;
+            else ans+=cnt;
+        }
+        return ans;
+    }
+};
