@@ -1,0 +1,45 @@
+// Problem: Maximum Candies You Can Get from Boxes (LC 1298)
+// Link: https://leetcode.com/problems/maximum-candies-you-can-get-from-boxes/description/
+
+class Solution {
+public:
+    int maxCandies(vector<int>& status, vector<int>& candies, vector<vector<int>>& keys, vector<vector<int>>& containedBoxes, vector<int>& initialBoxes) {
+        map<int,vector<int>> adj;
+        for(int i=0;i<containedBoxes.size();i++){
+            for(int j=0;j<containedBoxes[i].size();j++){
+                adj[i].push_back(containedBoxes[i][j]);
+            }
+        }
+        queue<int> q;
+        for(int i=0;i<initialBoxes.size();i++){
+          q.push(initialBoxes[i]);
+          for(int j=0;j<keys[initialBoxes[i]].size();j++){
+            status[keys[initialBoxes[i]][j]]=1;
+          }  
+        } 
+        int n=status.size();
+        vector<int> vis(n,-1);
+        while(!q.empty()){
+            int node=q.front();
+            q.pop();
+            vis[node]=1;
+            for(auto nbr:adj[node]){
+                if(vis[nbr]==-1){
+                    vis[nbr]=1;
+                    if(status[nbr]==1){
+                        q.push(nbr);
+                        for(int j=0;j<keys[nbr].size();j++){
+                            if(vis[keys[nbr][j]]==1) q.push(keys[nbr][j]);
+                            status[keys[nbr][j]]=1;
+                        }
+                    }
+                }
+            }
+        }
+        int ans=0;
+        for(int i=0;i<n;i++){
+            if(status[i]==1 && vis[i]==1) ans+=candies[i];
+        }
+        return ans;
+    }
+};
