@@ -1,0 +1,38 @@
+// Problem: Find the Lexicographically Largest String From the Box I (LC 3403)
+// Link: https://leetcode.com/problems/find-the-lexicographically-largest-string-from-the-box-i/description/
+
+
+class Solution {
+public:
+    string answerString(string word, int numFriends) {
+        if(numFriends==1) return word;
+        char ma='a';
+        int ind=0;
+        int n=word.size();
+        for(int i=0;i<word.size();i++){
+            if(word[i]>ma){
+                ma=word[i];
+                ind=i;
+            }
+        }
+        vector<int> poss_ind;
+        for(int i=0;i<n;i++){
+            if(word[ind]==word[i]) poss_ind.push_back(i);
+        }
+        vector<string> poss_strings;
+        for(int i=0;i<poss_ind.size();i++){
+            ind=poss_ind[i];
+            int poss_len=n-numFriends+1;
+            string ans="";
+            while(ind<n && poss_len>0){
+                ans+=word[ind];
+                ind+=1;
+                poss_len-=1;
+            }
+            poss_strings.push_back(ans);
+        }
+        sort(poss_strings.begin(),poss_strings.end());
+        reverse(poss_strings.begin(),poss_strings.end());
+        return poss_strings[0];
+    }
+};
