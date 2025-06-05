@@ -1,0 +1,46 @@
+// Problem: Lexicographically Smallest Equivalent String (LC 1061)
+// Link: https://leetcode.com/problems/lexicographically-smallest-equivalent-string/description/
+
+class DisjointSet{
+    public:
+        vector<int> par;
+
+        DisjointSet(int n){
+            par.resize(n);
+
+            for(int i=0;i<n;i++){
+                par[i]=i;
+            }
+        }
+
+        int find_par(int i){
+            if(par[i]==i) return i;
+            return par[i]=find_par(par[i]);
+        }
+
+        void com(int i,int j){
+            int par_i=find_par(i);
+            int par_j=find_par(j);
+
+            if(par_i!=par_j){
+                if(par_i<par_j) par[par_j]=par_i;
+                else par[par_i]=par_j;
+            }
+        }
+};
+
+class Solution {
+public:
+
+    string smallestEquivalentString(string s1, string s2, string baseStr) {
+        DisjointSet ds(26);
+        for(int i=0;i<s1.size();i++){
+            ds.com(s1[i]-'a',s2[i]-'a');
+        }
+        string ans="";
+        for(int i=0;i<baseStr.size();i++){
+            ans+='a'+ds.find_par(baseStr[i]-'a');
+        }
+        return ans;
+    }
+};
