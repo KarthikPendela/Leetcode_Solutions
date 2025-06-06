@@ -1,0 +1,26 @@
+// Problem: Using a Robot to Print the Lexicographically Smallest String (LC 2434)
+// Link:https://leetcode.com/problems/using-a-robot-to-print-the-lexicographically-smallest-string/description/
+
+class Solution {
+public:
+    string robotWithString(string s) {
+        unordered_map<char,int> mp;
+        for(auto ch:s){
+            mp[ch]+=1;
+        }
+
+        stack<char> st;
+        string ans="";
+        char min='a';
+        for(auto ch:s){
+            st.push(ch);
+            mp[ch]-=1;
+            while(min!='z' && mp[min]==0) min++;
+            while(!st.empty() && st.top()<=min){
+                ans+=st.top();
+                st.pop();
+            }
+        }
+        return ans;
+    }
+};
