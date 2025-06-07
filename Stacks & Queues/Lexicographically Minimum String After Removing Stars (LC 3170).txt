@@ -1,0 +1,28 @@
+// Problem: Lexicographically Minimum String After Removing Stars (LC 3170)
+// Link: https://leetcode.com/problems/lexicographically-minimum-string-after-removing-stars/description/
+
+class Solution {
+public:
+    string clearStars(string s) {
+        vector<stack<int>> cnt(26);
+        int n=s.size();
+        for(int i=0;i<n;i++){
+            if(s[i]!='*'){
+                cnt[s[i]-'a'].push(i);
+            } else{
+                for(int j=0;j<26;j++){
+                    if(!cnt[j].empty()){
+                        s[cnt[j].top()]='*';
+                        cnt[j].pop();
+                        break;
+                    }
+                }
+            }
+        }
+        string ans="";
+        for(int i=0;i<n;i++){
+            if(s[i]!='*') ans+=s[i];
+        }
+        return ans;
+    }
+};
