@@ -1,0 +1,16 @@
+// Problem: Maximum Difference Between Adjacent Elements in a Circular Array (LC 3423)
+// Link: https://leetcode.com/problems/maximum-difference-between-adjacent-elements-in-a-circular-array/description/
+
+class Solution {
+public:
+    int maxAdjacentDistance(vector<int>& nums) {
+        int n=nums.size(),ans=INT_MIN,i=0,cnt=n;
+        while(cnt){
+            int a=i%n,b=(i+1)%n;
+            ans=max(ans,abs(nums[a]-nums[b]));
+            cnt-=1;
+            i+=1;
+        }
+        return ans;
+    }
+};
