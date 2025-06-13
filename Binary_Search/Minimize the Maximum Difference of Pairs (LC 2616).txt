@@ -1,0 +1,31 @@
+// Problem: Minimize the Maximum Difference of Pairs (LC 2616)
+// Link: https://leetcode.com/problems/minimize-the-maximum-difference-of-pairs/description/
+
+class Solution {
+public:
+    bool chk(vector<int>&nums, int ma,int p){
+        int cnt=0;
+        for(int i=0;i<nums.size()-1;i++){
+            if(nums[i+1]-nums[i]<=ma){
+                cnt+=1;
+                i+=1;
+            } 
+        }
+        if(cnt>=p) return true;
+        return false;
+    }
+    int minimizeMax(vector<int>& nums, int p) {
+        sort(nums.begin(),nums.end());
+        int n=nums.size();
+        int st=0,en=nums[n-1]-nums[0];
+        int ans=0;
+        while(st<=en){
+            int mid = st + (en-st)/2;
+            if(chk(nums,mid,p)){
+                ans=mid;
+                en=mid-1;
+            } else st=mid+1;
+        }
+        return ans;
+    }
+};
