@@ -1,0 +1,33 @@
+// Problem: Maximum Difference by Remapping a Digit (LC 2566)
+// Link: https://leetcode.com/problems/maximum-difference-by-remapping-a-digit/description/
+
+class Solution {
+public:
+    int minMaxDifference(int num) {
+        string num_str=to_string(num);
+        int idx=0,n=num_str.size();
+        string max_num="",min_num="";
+        for(int i=0;i<n;i++){
+            if(num_str[i]!='9'){
+                idx=i;
+                break;
+            }
+        }
+        for(int i=0;i<n;i++){
+            if(num_str[i]==num_str[idx]) max_num+='9';
+            else max_num+=num_str[i];
+        }
+        for(int i=0;i<n;i++){
+            if(num_str[i]!='0'){
+                idx=i;
+                break;
+            }
+        }
+        for(int i=0;i<n;i++){
+            if(num_str[i]==num_str[idx]) min_num+='0';
+            else min_num+=num_str[i];
+        }
+        int a=stoi(max_num),b=stoi(min_num);
+        return a-b;
+    }
+};
