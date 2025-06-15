@@ -1,0 +1,51 @@
+// Problem: Max Difference You Can Get From Changing an Integer (LC 1432)
+// Link: https://leetcode.com/problems/max-difference-you-can-get-from-changing-an-integer/description/
+
+class Solution {
+public:
+    int maxDiff(int num) {
+        map<char,int> mp;
+        int idx=0;
+        string num_str=to_string(num);
+        int n=num_str.size();
+        for(int i=0;i<n;i++){
+            mp[num_str[i]]+=1;
+        }
+        for(int i=0;i<n;i++){
+            if(num_str[i]!='9'){
+                idx=i;
+                break;
+            }
+        }
+        string max_num="",min_num="";
+        for(int i=0;i<n;i++){
+            if(num_str[i]==num_str[idx]) max_num+='9';
+            else max_num+=num_str[i];
+        }
+        idx=-1;
+        if(num_str[0]!='1'){
+            idx=0;
+            for(int i=0;i<n;i++){
+                if(num_str[i]==num_str[idx]) min_num+='1';
+                else min_num+=num_str[i];
+            }
+        } else{
+            for(int i=1;i<n;i++){
+                if(num_str[i]!='0' && num_str[i]!=num_str[0]){
+                    idx=i;
+                    break;
+                }
+            }
+            if(idx!=-1){
+                for(int i=0;i<n;i++){
+                    if(num_str[i]==num_str[idx]) min_num+='0';
+                    else min_num+=num_str[i];
+                }
+            } else{
+                for(int i=0;i<n;i++) min_num=num_str;
+            }
+        }
+     
+       return stoi(max_num)-stoi(min_num);
+    }
+};
