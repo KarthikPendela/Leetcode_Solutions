@@ -1,0 +1,25 @@
+// Problem: Divide Array Into Arrays With Max Difference (LC 2966)
+// Link: https://leetcode.com/problems/divide-array-into-arrays-with-max-difference/description/
+
+class Solution {
+public:
+    vector<vector<int>> divideArray(vector<int>& nums, int k) {
+        int n=nums.size();
+        vector<vector<int>> ans;
+        if(n%3!=0) return ans;
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<n-2;i+=3){
+            if(nums[i+2]-nums[i]>k) return ans;
+        }
+        vector<int> l;
+        for(int i=0;i<n;i++){
+            l.push_back(nums[i]);
+            if(l.size()==3){
+                ans.push_back(l);
+                l.erase(l.begin(),l.end());
+            }
+        }
+        return ans;
+        
+    }
+};
