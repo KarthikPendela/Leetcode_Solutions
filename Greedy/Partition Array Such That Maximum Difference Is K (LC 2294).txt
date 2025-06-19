@@ -1,0 +1,19 @@
+// Problem: Partition Array Such That Maximum Difference Is K (LC 2294)
+// Link: https://leetcode.com/problems/partition-array-such-that-maximum-difference-is-k/description/
+
+class Solution {
+public:
+    int partitionArray(vector<int>& nums, int k) {
+        sort(nums.begin(),nums.end());
+        int ans=1,min_ind=0;
+        int n=nums.size();
+        for(int i=0;i<n;i++){
+            if(nums[i]-nums[min_ind]<=k) continue;
+            else{
+                ans+=1;
+                min_ind=i;
+            }
+        }
+        return ans;
+    }
+};
