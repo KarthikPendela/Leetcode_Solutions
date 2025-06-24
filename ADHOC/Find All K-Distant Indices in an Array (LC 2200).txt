@@ -1,0 +1,21 @@
+// Problem: Find All K-Distant Indices in an Array (LC 2200)
+// Link: https://leetcode.com/problems/find-all-k-distant-indices-in-an-array/description/
+
+class Solution {
+public:
+    vector<int> findKDistantIndices(vector<int>& nums, int key, int k) {
+        int n=nums.size();
+        int high=0;
+        vector<int> ans;
+        for(int i=0;i<n;i++){
+            if(nums[i]==key){
+                int low=max(high,i-k);
+                high=min(n-1,i+k)+1;
+                for(int j=low;j<high;j++){
+                    ans.push_back(j);
+                }
+            }
+        }
+        return ans;
+    }
+};
