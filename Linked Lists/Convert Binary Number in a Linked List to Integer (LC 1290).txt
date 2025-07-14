@@ -1,0 +1,26 @@
+// Problem: Convert Binary Number in a Linked List to Integer (LC 1290)
+// Link: https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/description
+
+class Solution {
+public:
+    ListNode* reverseLL(ListNode *head){
+        if(head->next ==NULL) return head;
+
+        ListNode *newHead = reverseLL(head->next);
+        ListNode *temp=head->next;
+        temp->next = head;
+        head->next=NULL;
+        return newHead; 
+    }
+    int getDecimalValue(ListNode* head) {
+        ListNode *newHead= reverseLL(head);
+        int ans=0,mul=1;
+        ListNode *temp=newHead;
+        while(temp){
+            if(temp->val == 1) ans+=mul;
+            temp=temp->next;
+            mul*=2;
+        }
+        return ans;
+    }
+};
