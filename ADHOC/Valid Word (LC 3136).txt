@@ -1,0 +1,23 @@
+// Problem: Valid Word (LC 3136)
+// Link: https://leetcode.com/problems/valid-word/description/
+
+class Solution:
+    def isValid(self, word: str) -> bool:
+        if(len(word)<3): return False 
+        word=word.lower()
+        alphabets='abcdefghijklmnopqrstuvwxyz'
+        numbers = '0123456789'
+        vowels='aeiou'
+        hasVowels, hasConsonants = False, False
+        for i in word:
+            if i in numbers:
+                continue
+            else:
+                if i not in alphabets:
+                    return False
+                else:
+                    if i in vowels:
+                        hasVowels = True
+                    else:
+                        hasConsonants = True
+        return (hasVowels and hasConsonants)
