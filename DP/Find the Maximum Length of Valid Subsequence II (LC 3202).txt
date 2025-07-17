@@ -1,0 +1,22 @@
+// Problem: Find the Maximum Length of Valid Subsequence II (LC 3202)
+// Link: https://leetcode.com/problems/find-the-maximum-length-of-valid-subsequence-ii/description/
+
+class Solution {
+public:
+    int maximumLength(vector<int>& nums, int k) {
+        vector<int> rem_num;
+        int n=nums.size();
+        for(int i=0;i<n;i++){
+            rem_num.push_back(nums[i]%k);
+        }
+        vector<vector<int>> dp(k+1,vector<int>(k+1,0));
+        int ans=0;
+        for(int i=0;i<n;i++){
+           for(int j=0;j<k;j++){
+            dp[rem_num[i]][j] = 1+dp[j][rem_num[i]];
+            ans=max(ans,dp[rem_num[i]][j]);
+           }
+        }
+        return ans;
+    }
+};
