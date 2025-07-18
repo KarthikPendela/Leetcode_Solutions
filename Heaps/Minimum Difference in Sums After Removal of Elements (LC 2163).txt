@@ -1,0 +1,42 @@
+// Problem: Minimum Difference in Sums After Removal of Elements (LC 2163)
+// Link: https://leetcode.com/problems/minimum-difference-in-sums-after-removal-of-elements/description/
+
+class Solution {
+public:
+    #define ll long long
+    long long minimumDifference(vector<int>& nums) {
+        ll n=nums.size();
+
+        priority_queue<ll, vector<ll>, greater<ll>> min_heap;
+        vector<ll> right_maxsum(n,0);
+        ll right_sum=0;
+        for(int i=n-1;i>=n/3;i--){
+            min_heap.push(nums[i]);
+            right_sum+=nums[i];
+            if(min_heap.size()>n/3){
+                right_sum-=min_heap.top();
+                min_heap.pop();
+            }
+            if(min_heap.size()==n/3)
+                right_maxsum[i]=right_sum;
+        }
+
+        priority_queue<ll> max_heap;
+        ll min_sum=LLONG_MAX;
+        ll left_sum=0;
+        for(int i=0;i<2*n/3;i++){
+            max_heap.push(nums[i]);
+            left_sum+=nums[i];
+            if(max_heap.size()>n/3){
+                left_sum-=max_heap.top();
+                max_heap.pop();
+            }
+            if(max_heap.size()==n/3){
+                min_sum = min(min_sum, left_sum - right_maxsum[i+1]);
+            }
+        }
+
+        return min_sum;
+
+    }
+};
