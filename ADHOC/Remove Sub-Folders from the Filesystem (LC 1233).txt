@@ -1,0 +1,43 @@
+// Problem: Remove Sub-Folders from the Filesystem (LC 1233)
+// Link: https://leetcode.com/problems/remove-sub-folders-from-the-filesystem/description/
+
+class Solution {
+public:
+    static bool comp(string &a, string &b){
+        return a.size()<b.size();
+    }
+
+    vector<string> removeSubfolders(vector<string>& folder) {
+        map<string,int> mp;
+        vector<string> ans;
+        int n=folder.size();
+        sort(folder.begin(),folder.end(),comp);
+        for(int i=0;i<n;i++){
+            string st="",st1="";
+            int f=0;
+            for(int j=1;j<folder[i].size();j++){
+                if(folder[i][j]=='/'){
+                    st+=st1;
+                    st+='.';
+                    if(mp.find(st)!=mp.end()){
+                        f+=1;
+                        break;
+                    }
+                    st1="";
+                } else{
+                    st1+=folder[i][j];
+                }
+            }
+            if(f==0){
+                st+=st1;
+                st+='.';
+                if(mp.find(st)==mp.end()){
+                    mp[st]=1;
+                    ans.push_back(folder[i]);
+                }
+            }
+
+        }
+        return ans;
+    }
+};
