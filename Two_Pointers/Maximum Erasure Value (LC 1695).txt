@@ -1,0 +1,36 @@
+// Problem: Maximum Erasure Value (LC 1695)
+// Link: https://leetcode.com/problems/maximum-erasure-value/description
+
+class Solution {
+public:
+    int maximumUniqueSubarray(vector<int>& nums) {
+        int ans=nums[0],max_ind=0,n=nums.size();
+        vector<int> pre_num(n,0);
+        map<int,int> mp;
+        mp[nums[0]]=0;
+        pre_num[0]=nums[0];
+        for(int i=1;i<n;i++){
+            pre_num[i]=pre_num[i-1]+nums[i];
+        }
+        int i=-1,j=1;
+        while(j<n){
+            if(mp.find(nums[j])!=mp.end()){
+                if(mp[nums[j]]>i){
+                    if(i==-1){
+                        ans=max(ans,pre_num[j-1]);
+                        i=mp[nums[j]];
+                    } else{
+                        ans=max(ans,pre_num[j-1]-pre_num[i]);
+                        i=mp[nums[j]];
+                    }
+                }
+            }
+            mp[nums[j]]=j;
+            j+=1;
+        }
+        if(i==-1) ans=pre_num[n-1];
+        else ans=max(ans,pre_num[n-1]-pre_num[i]);
+        return ans;
+        
+    }
+};
