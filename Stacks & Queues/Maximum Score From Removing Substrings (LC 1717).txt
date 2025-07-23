@@ -1,0 +1,43 @@
+// Problem: Maximum Score From Removing Substrings (LC 1717)
+// Link: https://leetcode.com/problems/maximum-score-from-removing-substrings/description/
+
+class Solution {
+public:
+    int helper(string ref_str, string s,int x, int y){
+        int n=s.size(), cnt1,cnt2,ans=0;
+        if(x>y){
+            cnt1=x;cnt2=y;
+        }else{
+            cnt1=y;cnt2=x;
+        }
+        stack<char> st;
+        for(int i=0;i<n;i++){
+            if(s[i]==ref_str[1]){
+                if(!st.empty() && st.top() == ref_str[0]){
+                    st.pop();
+                    ans+=cnt1;
+                } else st.push(s[i]);
+            } else st.push(s[i]);
+        }
+        string new_str="";
+        while(!st.empty()){
+            new_str+=st.top();
+            st.pop();
+        }
+        reverse(new_str.begin(),new_str.end());
+        for(int i=0;i<new_str.size();i++){
+            if(new_str[i]==ref_str[0]){
+                if(!st.empty() && st.top()==ref_str[1]){
+                    st.pop();
+                    ans+=cnt2;
+                } else st.push(new_str[i]);
+            } else st.push(new_str[i]);
+        }
+        return ans;
+    }
+
+    int maximumGain(string s, int x, int y) {
+        if(x>y) return helper("ab",s,x,y);
+        return helper("ba",s,x,y);
+    }
+};
